@@ -1,0 +1,21 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: nextjs-docker-deployment
+  labels:
+    app: nextjs-docker
+spec:
+  replicas: 3
+  selector:
+    matchLabels:
+      app: nextjs-docker
+  template:
+    metadata:
+      labels:
+        app: nextjs-docker
+    spec:
+      containers:
+      - name: nextjs-docker
+        image: cblsep2022.azurecr.io/nextjs-docker:v2
+        ports:
+        - containerPort: 3000

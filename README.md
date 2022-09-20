@@ -1,71 +1,28 @@
-# With Docker
+# Cloud Builder Live - September 2022
 
-This examples shows how to use Docker with Next.js based on the [deployment documentation](https://nextjs.org/docs/deployment#docker-image). Additionally, it contains instructions for deploying to Google Cloud Run. However, you can use any container-based deployment host.
+![Cloud Builder Live Thumbnail](/thumbnail.jpg)
 
-## How to use
+In this session, David will guide learners through the process of setting up the Azure Kubernetes Service and deploying a Next.js web application. This session doesn't assume any Kubernetes knowledge, so feel to join and learn!
 
-Execute [`create-next-app`](https://github.com/vercel/next.js/tree/canary/packages/create-next-app) with [npm](https://docs.npmjs.com/cli/init), [Yarn](https://yarnpkg.com/lang/en/docs/cli/create/), or [pnpm](https://pnpm.io) to bootstrap the example:
+Watch it Live - [Cloud Builder Live - September 2022](https://www.youtube.com/watch?v=V3AwbjzJ7PQ)  
 
-```bash
-npx create-next-app --example with-docker nextjs-docker
-# or
-yarn create next-app --example with-docker nextjs-docker
-# or
-pnpm create next-app --example with-docker nextjs-docker
-```
+## Warning
 
-## Using Docker
+**It is important to note that you could incur substantial Azure charges if you do not delete the resources configured in this episode.** At the end of the episode I will cover the delete process in detail.
 
-1. [Install Docker](https://docs.docker.com/get-docker/) on your machine.
-1. Build your container: `docker build -t nextjs-docker .`.
-1. Run your container: `docker run -p 3000:3000 nextjs-docker`.
+## Prerequisites
 
-You can view your images created with `docker images`.
+To follow along with this demo, you will need three things: an Azure subscription, the Azure CLI, and Docker.  You can get instructions on how to get these setup at the following links:
 
-### In existing projects
+* [Create an Azure Subscription](https://azure.microsoft.com/en-us/free/)
+* [Install the Azure CLI](https://learn.microsoft.com/en-us/cli/azure/install-azure-cli)
+* [Install Docker](https://docs.docker.com/get-docker/)
 
-To add support for Docker to an existing project, just copy the `Dockerfile` into the root of the project and add the following to the `next.config.js` file:
+## Tools to Install
 
-```js
-// next.config.js
-module.exports = {
-  // ... rest of the configuration.
-  output: 'standalone',
-}
-```
+During the episode, I'll be walking you through some tools we will be using to deploy, monitor, and configure Kubernetes (k8s) via the Elastic Kubernetes Service (EKS).  I've listed them below along with the purpose for including them:
 
-This will build the project as a standalone app inside the Docker image.
-
-## Deploying to Google Cloud Run
-
-1. Install the [Google Cloud SDK](https://cloud.google.com/sdk/docs/install) so you can use `gcloud` on the command line.
-1. Run `gcloud auth login` to log in to your account.
-1. [Create a new project](https://cloud.google.com/run/docs/quickstarts/build-and-deploy) in Google Cloud Run (e.g. `nextjs-docker`). Ensure billing is turned on.
-1. Build your container image using Cloud Build: `gcloud builds submit --tag gcr.io/PROJECT-ID/helloworld --project PROJECT-ID`. This will also enable Cloud Build for your project.
-1. Deploy to Cloud Run: `gcloud run deploy --image gcr.io/PROJECT-ID/helloworld --project PROJECT-ID --platform managed`. Choose a region of your choice.
-
-   - You will be prompted for the service name: press Enter to accept the default name, `helloworld`.
-   - You will be prompted for [region](https://cloud.google.com/run/docs/quickstarts/build-and-deploy#follow-cloud-run): select the region of your choice, for example `us-central1`.
-   - You will be prompted to **allow unauthenticated invocations**: respond `y`.
-
-Or click the button below, authorize the script, and select the project and region when prompted:
-
-[![Run on Google Cloud](https://deploy.cloud.run/button.svg)](https://deploy.cloud.run/?git_repo=https://github.com/vercel/next.js.git&dir=examples/with-docker)
-
-## Running Locally
-
-First, run the development server:
-
-```bash
-npm run dev
-# or
-yarn dev
-```
-
-Open [http://localhost:3000](http://localhost:3000) with your browser to see the result.
-
-You can start editing the page by modifying `pages/index.js`. The page auto-updates as you edit the file.
-
-[API routes](https://nextjs.org/docs/api-routes/introduction) can be accessed on [http://localhost:3000/api/hello](http://localhost:3000/api/hello). This endpoint can be edited in `pages/api/hello.js`.
-
-The `pages/api` directory is mapped to `/api/*`. Files in this directory are treated as [API routes](https://nextjs.org/docs/api-routes/introduction) instead of React pages.
+| Tool | Installation Instructions | Use |
+|-----|-----|-----|
+| **kubectl** | [Install kubectl](https://learn.microsoft.com/en-us/azure/aks/tutorial-kubernetes-deploy-cluster?tabs=azure-cli#install-the-kubernetes-cli) | The official k8s command line tool for interacting with the cluster API's. *This tool requires a proper config file referencing the cluster you will be working on.* |
+| **k9s** | [Install k9s](https://k9scli.io/topics/install/) | Terminal based tool for the monitoring and management of a k8s cluster. *This tool requires kubectl to be installed.*<br><br>[Video Overview of k9s](https://www.youtube.com/watch?v=jovHiTobzKQ)|
